@@ -38,5 +38,19 @@ module CovidDeathTollComparisonApi
     # enable caching
     config.action_controller.perform_caching = true
     config.cache_store = :redis_cache_store, { url: 'redis://cache:6379/0' }
+
+    # enable cors
+    # want to load the real origin here via an env fuke
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource(
+          '*',
+          headers: :any,
+          methods: [:get, :patch, :put, :delete, :post, :options]
+          )
+      end
+    end
+
   end
 end
