@@ -1,38 +1,64 @@
-require "calculate_results"
+require "scrape_cdc_html"
+require "parse_nyt_csv"
+require "fetch_john_hopkins_json"
+require "calculate_cache_exp_secs"
 
 class ResultsController < ApplicationController
-    def index
+    def get_results
+        results_data = init_response("results")
+        render :json => results_data
+    end
 
-        cached_results = Rails.cache.read("results")        
-        
+    def get_sources
+        results_data = init_response("sources")
+        render :json => results_data
+    end
 
-        if cached_results == nil
-            puts "from calculation"
-            results = calculate_results()
+    private 
 
-            current_hour = DateTime.now.hour
-
-            if current_hour < 22
-                hours_until_next_fetch = (current_hour < 13 ? 13 - current_hour : 22 - current_hour).hours
-                next_fetch_datetime = (DateTime.now + hours_until_next_fetch).beginning_of_hour
-            else
-                next_fetch_datetime = (DateTime.now + 1.days).beginning_of_day + 13.hours
-            end 
-
-
-            cache_exp_secs = ((next_fetch_datetime - DateTime.now)* 24 * 60 * 60).to_i
-            puts cache_exp_secs
-
-            Rails.cache.write("results", results, expires_in: cache_exp_secs)
-    
-            render :json => results
-        
-            
-        else
-            puts "from cache"
-            render :json => cached_results
+    def init_response(data_key)
+        cached = Rails.cache.read(data_key)
+        if cached == nil
+            execute
+            cached = Rails.cache.read(data_key)
         end
 
-        
+        cached
     end
+
+    def execute
+        
+        cdc_data = scrape_cdc_html
+        nyt_data = parse_nyt_csv
+        jhu_data = fetch_john_hopkins_json
+        
+        cache_exp_secs = calculate_cache_exp_secs
+
+        
+
+        output = { 
+            "results" => {
+                "cdc" => {
+                    "death_count" => cdc_data["death_count"]
+                },
+                "nyt" => {
+                    "death_count" => nyt_data["death_count"]
+                },
+                "jhu" => {
+                    "death_count" => jhu_data["death_count"]
+                }
+            },
+            "sources" => {
+                "cdc" => cdc_data["source_info"],
+                "nyt" => nyt_data["source_info"],
+                "jhu" => jhu_data["source_info"]
+            }
+        }
+
+        Rails.cache.write("results", output["results"], :expires_in => cache_exp_secs)
+        Rails.cache.write("sources", output["sources"], :expires_in => cache_exp_secs)
+
+        output
+    end
+
 end
