@@ -8,8 +8,8 @@ services:
     build: .
     environment:
       - "RAILS_ENV=production"
-      - "PRODUCTION_HOST_DNS=#{PRODUCTION_HOST_DNS}"
-      - "PRODUCTION_CLIENT_ORIGIN=#{PRODUCTION_CLIENT_ORIGIN}"
+      - "PRODUCTION_HOST_DNS=${PRODUCTION_HOST_DNS}"
+      - "PRODUCTION_CLIENT_ORIGIN=${PRODUCTION_CLIENT_ORIGIN}"
     ports:
       - "80:3000"
     volumes:
