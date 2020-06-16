@@ -6,7 +6,8 @@ services:
       - "6379"
   api:
     build: .
-    environment: -"RAILS_ENV=development"
+    environment:
+      - "RAILS_ENV=development"
     ports:
       - "80:3000"
     volumes:
