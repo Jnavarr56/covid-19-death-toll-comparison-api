@@ -34,3 +34,6 @@
 
 # Environment variables
 .env
+
+# AWS SSH Connect PEM Credentials
+*.pem
