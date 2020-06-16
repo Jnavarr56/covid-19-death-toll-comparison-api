@@ -103,16 +103,13 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  # Not using this rails feature
-  config.require_master_key = false
-
   # In production, allow requests to the DNS.  
-  config.hosts << ENV["PRODUCTION_HOST_DNS"]
+  config.hosts << ENV["PRODUCTION_HOST"]
 
   # In production, allow this api to be hit from only the specified origins.
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'localhost:3001', ENV['PRODUCTION_CLIENT_ORIGIN']
+      origins ENV['PRODUCTION_CLIENT_ORIGIN']
       resource(
         '*',
         headers: :any,
