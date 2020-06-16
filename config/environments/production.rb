@@ -105,6 +105,7 @@ Rails.application.configure do
 
   # In production, allow requests to the DNS.  
   config.hosts << ENV["PRODUCTION_HOST_DNS"]
+  config.hosts << "localhost"
 
   # In production, allow this api to be hit from only the specified origins.
   config.middleware.insert_before 0, Rack::Cors do
