@@ -32,25 +32,10 @@ module CovidDeathTollComparisonApi
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
+    config.api_only = true  
 
-
-    # enable caching
+    # Always enable caching.
     config.action_controller.perform_caching = true
     config.cache_store = :redis_cache_store, { url: 'redis://cache:6379/0' }
-
-    # enable cors
-    # want to load the real origin here via an env file
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource(
-          '*',
-          headers: :any,
-          methods: [:get, :patch, :put, :delete, :post, :options]
-          )
-      end
-    end
-
   end
 end

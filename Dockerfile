@@ -1,11 +1,25 @@
 
-# Ruby on Rails Development Environment
+# Ruby on Rails Environment
 FROM ruby:latest
 
 # Set up Linux
-RUN apt-get update
-RUN apt-get upgrade -y
-# RUN apt-get install -y build-essential inotify-tools less mysql-client nodejs libpq-dev nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y
 
+RUN mkdir /app
 WORKDIR /app
-EXPOSE 3000
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+
+# Dependency stuff
+RUN bundle install 
+
+# Copy ./run.sh into here
+COPY . /app 
+
+ENTRYPOINT ["sh", "./run.sh"]
+
+
+
+
+
+

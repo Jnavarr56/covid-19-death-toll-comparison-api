@@ -6,13 +6,10 @@ services:
       - "6379"
   api:
     build: .
-    volumes:
-      - type: bind
-        source: .
-        target: /app
+    environment: -"RAILS_ENV=development"
     ports:
       - "80:3000"
-    command:
-      - ./run.sh
+    volumes:
+      - .:/app
     depends_on:
       - "cache"
