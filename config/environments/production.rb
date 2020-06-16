@@ -109,7 +109,7 @@ Rails.application.configure do
   # In production, allow this api to be hit from only the specified origins.
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'localhost:3001', ENV['PRODUCTION_CLIENT_ORIGIN']
+      origins ENV['PRODUCTION_CLIENT_ORIGIN']
       resource(
         '*',
         headers: :any,
