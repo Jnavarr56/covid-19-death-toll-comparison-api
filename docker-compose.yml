@@ -10,8 +10,8 @@ services:
       - "RAILS_ENV=production"
       - "PRODUCTION_HOST_DNS=${PRODUCTION_HOST_DNS}"
       - "PRODUCTION_CLIENT_ORIGIN=${PRODUCTION_CLIENT_ORIGIN}"
-    expose: :
-      - "3000"
+    ports:
+      - "3000:3000"
     volumes:
       - .:/app
     depends_on:
