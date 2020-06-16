@@ -28,12 +28,14 @@
 !/storage/.keep
 .byebug_history
 
-# Ignore master key for decrypting credentials and more.
-/config/master.key
-
-
 # Environment variables
 .env
 
-# AWS SSH Connect PEM Credentials
+# Secret Things
+**/*.key
 *.pem
+
+# nginx deployment config
+nginx.conf
+
+
