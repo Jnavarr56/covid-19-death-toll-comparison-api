@@ -104,7 +104,7 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
 
-  # a  
+  # In production, allow requests to the DNS.  
   config.hosts << ENV["PRODUCTION_HOST_DNS"]
 
   # In production, allow this api to be hit from only the specified origins.
