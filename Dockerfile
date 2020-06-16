@@ -16,6 +16,8 @@ RUN bundle install
 # Copy ./run.sh into here
 COPY . /app 
 
+RUN rails credentials:edit
+
 ENTRYPOINT ["sh", "./run.sh"]
 
 
