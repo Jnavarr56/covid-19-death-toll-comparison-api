@@ -1,6 +1,6 @@
 
 # Ruby on Rails Environment
-FROM ruby:latest
+FROM ruby:2.7.1
 
 # Set up Linux
 RUN apt-get update -qq && apt-get install -y
