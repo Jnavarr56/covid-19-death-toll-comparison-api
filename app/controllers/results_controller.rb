@@ -19,11 +19,11 @@ class ResultsController < ApplicationController
   private
 
   def init_response(data_key)
-    # cached = Rails.cache.read(data_key)
-    # if cached.nil?
-    execute
     cached = Rails.cache.read(data_key)
-    # end
+    if cached.nil?
+      execute
+      cached = Rails.cache.read(data_key)
+    end
 
     cached
   end
