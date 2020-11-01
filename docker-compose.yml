@@ -7,9 +7,8 @@ services:
   api:
     build: .
     environment:
-      - "RAILS_ENV=production"
-      - "PRODUCTION_HOST=${PRODUCTION_HOST}"
-      - "PRODUCTION_CLIENT_ORIGIN=${PRODUCTION_CLIENT_ORIGIN}"
+      - "RAILS_ENV=development"
+      - "SCRAPE_URL=${SCRAPE_URL}"
     ports:
       - "3000:3000"
     volumes:
