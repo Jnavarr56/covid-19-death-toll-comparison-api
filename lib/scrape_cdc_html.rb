@@ -5,6 +5,7 @@ require 'net/http'
 require 'net/https'
 
 CDC_HTML_URL = ENV['SCRAPE_URL']
+FRIENDLY_LINK = 'https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html'
 
 def scrape_cdc_html
   request_uri = URI(CDC_HTML_URL)
@@ -22,8 +23,8 @@ def scrape_cdc_html
     'death_count' => death_count,
     'source_info' => {
       'data_type' => 'HTML',
-      'data_link' => CDC_HTML_URL,
-      'org_link' => CDC_HTML_URL,
+      'data_link' => FRIENDLY_LINK,
+      'org_link' => FRIENDLY_LINK,
       'description' => "
                         Data on this page are reported voluntarily to CDC by each jurisdiction’s health department. CDC encourages all jurisdictions to report the most complete and accurate information that best represents the current status of the pandemic in their jurisdiction.
                     "
